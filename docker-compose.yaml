@@ -1,0 +1,52 @@
+version: '3.5'
+
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.5
+    hostname: zookeeper
+    container_name: zookeeper
+    restart: always
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    expose:
+      - 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.5
+    container_name: kafka
+    hostname: kafka
+    restart: always
+    depends_on:
+      - zookeeper
+    ports:
+      - "9091:9091"
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL://localhost:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://:9092,EXTERNAL://:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:v0.7.1
+    container_name: kafka-ui
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      - SERVER_PORT=8080
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+      - KAFKA_CLUSTERS_0_READONLY=true
+    depends_on:
+      - kafka
