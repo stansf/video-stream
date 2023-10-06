@@ -1,19 +1,14 @@
-from pyspark.conf import SparkConf
-from pyspark.context import SparkContext
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import udf
-from pyspark.sql.types import ArrayType, ByteType, BinaryType, StringType
-# from pyspark.st
-from pyspark.sql import Row
-import numpy as np
-import cv2
 import io
 import json
 
-from detector import get_detector
-
+import cv2
+import numpy as np
+from pyspark.context import SparkContext
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import udf
 
 from constants import TOPIC, TOPIC2
+from detector import get_detector
 
 
 @udf
