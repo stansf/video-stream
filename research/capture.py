@@ -18,6 +18,7 @@ class RTSPVideoWriterObject(object):
         # Set up codec and output video settings
         self.codec = cv2.VideoWriter_fourcc('M','J','P','G')
         self.output_video = cv2.VideoWriter('output.avi', self.codec, 30, (self.frame_width, self.frame_height))
+        self.frame = None
 
         # Start the thread to read frames from the video stream
         self.thread = Thread(target=self.update, args=())
@@ -46,6 +47,9 @@ class RTSPVideoWriterObject(object):
     def save_frame(self):
         # Save obtained frame into video output file
         self.output_video.write(self.frame)
+
+    def get_frame(self):
+        return self.frame
 
 
 if __name__ == '__main__':

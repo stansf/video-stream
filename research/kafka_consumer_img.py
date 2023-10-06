@@ -5,6 +5,7 @@ import io
 from constants import TOPIC, TOPIC2
 import sys
 
+
 def main():
     consumer = Consumer({'bootstrap.servers': 'localhost:9093',
                          'group.id': 'mygroup',

@@ -1,5 +1,6 @@
 import random
 from pathlib import Path
+from functools import lru_cache
 
 import cv2
 import numpy as np
@@ -95,6 +96,12 @@ class Detector:
         inp = {inname[0]: im}
         outputs = self.session.run(outname, inp)[0]
         return self._postprocess_outputs(outputs, dwdh, ratio)
+
+
+@lru_cache()
+def get_detector():
+    d = Detector(Path(__file__).parent / 'yolov7-tiny.onnx')
+    return d
 
 
 def main():
