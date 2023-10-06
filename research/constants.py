@@ -1,3 +1,5 @@
-TOPIC_IMAGES = 'demo_topic'
-TOPIC_DETECTIONS = 'value2'
-stream_url = 'http://211.132.61.124/mjpg/video.mjpg'
+TOPIC_IMAGES = 'input-stream'
+# TOPIC_DETECTIONS = 'value2'
+TOPIC_DETECTIONS_VIS = 'out-stream'
+stream_url1 = 'http://211.132.61.124/mjpg/video.mjpg'
+stream_url2 = 'http://185.137.146.14/mjpg/video.mjpg'

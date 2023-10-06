@@ -70,19 +70,19 @@ services:
           memory: 2G
           cpus: '1'
 
-#  kafka-producer:
-#    build:
-#      context: .
-#      dockerfile: stream-producer/Dockerfile
-#    container_name: kafka-producer
-#    restart: always
-#    command: 'python3 /app/stream-producer/main.py'
-#    depends_on:
-#      - kafka
-#    environment:
-#      - KAFKA_SERVER=kafka:9092
-#      - STREAM_URL='http://185.137.146.14/mjpg/video.mjpg'
-# #      - TIMEOUT=5
+  kafka-producer:
+    build:
+      context: .
+      dockerfile: stream-producer/Dockerfile
+    container_name: kafka-producer
+    restart: always
+    command: 'python3 /app/stream-producer/main.py'
+    depends_on:
+      - kafka
+    environment:
+      - KAFKA_SERVER=kafka:9092
+      - STREAM_URL='http://185.137.146.14/mjpg/video.mjpg'
+ #      - TIMEOUT=5
 
   pyspark:
     build:
