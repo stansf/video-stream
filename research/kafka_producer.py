@@ -26,7 +26,8 @@ def delivery_report(err, msg):
 def main():
     p = Producer({'bootstrap.servers': 'localhost:9093'})
 
-    for i in range(10):
+    i = 0
+    while True:
         data = f'Hello {i}'
         # Trigger any available delivery report callbacks from previous produce() calls
         p.poll(0.5)
@@ -35,7 +36,8 @@ def main():
         # be triggered from the call to poll() above, or flush() below, when the
         # message has been successfully delivered or failed permanently.
         p.produce(TOPIC, data.encode('utf-8'), callback=delivery_report)
-        sleep(0.5)
+        sleep(2)
+        i += 1
 
     # Wait for any outstanding messages to be delivered and delivery report
     # callbacks to be triggered.

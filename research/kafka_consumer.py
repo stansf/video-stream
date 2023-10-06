@@ -1,12 +1,12 @@
 from confluent_kafka import Consumer
 
-from constants import TOPIC
+from constants import TOPIC, TOPIC2
 
 
 def main():
     consumer = Consumer({'bootstrap.servers': 'localhost:9093',
                          'group.id': 'mygroup'})
-    consumer.subscribe([TOPIC])
+    consumer.subscribe([TOPIC2])
     while True:
         msg = consumer.poll(1.0)
 
