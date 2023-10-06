@@ -27,6 +27,10 @@ services:
       - "9091:9091"
       - "9092:9092"
       - "9093:9093"
+    expose:
+      - 9093
+      - 9092
+      - 9091
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -50,3 +54,22 @@ services:
       - KAFKA_CLUSTERS_0_READONLY=true
     depends_on:
       - kafka
+
+  pyspark:
+    image: spark:3.5.0-python3
+    container_name: pyspark-service
+    ports:
+      - "8006:8006"
+      - "4040:4040"
+    restart: always
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+#    command: bash
+    user: root
+    entrypoint: /bin/bash
+    expose:
+      - 8006
+      - 4040
+    volumes:
+      - "/home/fateev/dev/video_streaming:/video_streaming"
+
