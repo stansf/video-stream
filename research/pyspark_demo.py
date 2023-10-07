@@ -11,7 +11,7 @@ import io
 import json
 
 
-from constants import TOPIC, TOPIC2
+from constants import TOPIC_IMAGES, TOPIC_DETECTIONS
 
 
 @udf(BinaryType())
@@ -50,7 +50,7 @@ def main():
 
     df = spark.readStream.format('kafka') \
         .option('kafka.bootstrap.servers', 'kafka:9092') \
-        .option('subscribe', TOPIC).load()
+        .option('subscribe', TOPIC_IMAGES).load()
     # query = df.rdd.map(f)
 
     # ff = udf(f, ByteType())
@@ -68,7 +68,7 @@ def main():
     query = df2.selectExpr(select_expr).writeStream \
         .format("kafka") \
         .option("kafka.bootstrap.servers", "kafka:9092") \
-        .option("topic", TOPIC2) \
+        .option("topic", TOPIC_DETECTIONS) \
         .start()
 
     query.awaitTermination()

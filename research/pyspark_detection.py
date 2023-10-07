@@ -7,7 +7,7 @@ from pyspark.context import SparkContext
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import udf
 
-from constants import TOPIC, TOPIC2
+from constants import TOPIC_IMAGES, TOPIC_DETECTIONS
 from detector import get_detector
 
 
@@ -30,14 +30,14 @@ def main():
 
     df = spark.readStream.format('kafka') \
         .option('kafka.bootstrap.servers', 'kafka:9092') \
-        .option('subscribe', TOPIC).load()
+        .option('subscribe', TOPIC_IMAGES).load()
     df2 = df.withColumn('detections', f(df.value))
 
     select_expr = 'detections as value'
     query = df2.selectExpr(select_expr).writeStream \
         .format("kafka") \
         .option("kafka.bootstrap.servers", "kafka:9092") \
-        .option("topic", TOPIC2) \
+        .option("topic", TOPIC_DETECTIONS) \
         .start()
 
     query.awaitTermination()

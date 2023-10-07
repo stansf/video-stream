@@ -2,7 +2,7 @@ from confluent_kafka import Consumer
 import cv2
 import numpy as np
 import io
-from constants import TOPIC, TOPIC2
+from constants import TOPIC_DETECTIONS
 import sys
 
 
@@ -11,7 +11,7 @@ def main():
                          'group.id': 'mygroup',
                          'auto.offset.reset': 'latest',
                          })
-    consumer.subscribe([TOPIC2])
+    consumer.subscribe([TOPIC_DETECTIONS])
     i = 0
     while True:
         msg = consumer.poll(1.0)

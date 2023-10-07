@@ -3,13 +3,13 @@ from pprint import pprint
 
 from confluent_kafka import Consumer
 
-from constants import TOPIC, TOPIC2
+from constants import TOPIC_DETECTIONS
 
 
 def main():
     consumer = Consumer({'bootstrap.servers': 'localhost:9093',
                          'group.id': 'mygroup'})
-    consumer.subscribe([TOPIC2])
+    consumer.subscribe([TOPIC_DETECTIONS])
     while True:
         msg = consumer.poll(1.0)
 

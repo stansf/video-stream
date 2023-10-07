@@ -3,7 +3,7 @@ from time import sleep
 import cv2
 from confluent_kafka import Producer
 
-from constants import TOPIC, stream_url
+from constants import TOPIC_IMAGES, stream_url
 from capture import RTSPVideoWriterObject
 
 
@@ -36,8 +36,8 @@ def main():
         # Asynchronously produce a message. The delivery report callback will
         # be triggered from the call to poll() above, or flush() below, when the
         # message has been successfully delivered or failed permanently.
-        p.produce(TOPIC, img_b, callback=delivery_report)
-        sleep(5)
+        p.produce(TOPIC_IMAGES, img_b, callback=delivery_report)
+        # sleep(5)
         i += 1
 
     # Wait for any outstanding messages to be delivered and delivery report
