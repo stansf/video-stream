@@ -30,6 +30,7 @@
 4. Stream demo. Простений веб-сервис, который визуализирует изображений, которые получает из топика с результатами. Реализован на FastAPI.
 
 Презентация: [ссылка](https://docs.google.com/presentation/d/1gSb7OFuuXfeUcOst7PTSp9EvDVUvcfTENw5SOQtmM-E/edit?usp=sharing)
+Демонстарция: [ссылка](https://drive.google.com/drive/folders/19YvH0i473xn8Nkgdu9sZL43x5JvJeG1W?usp=sharing)
 
 _(*) - сервис Stream producer почему-то не захотел запускаться в контейнере, но его можно запустить локально:_
 ```commandline
