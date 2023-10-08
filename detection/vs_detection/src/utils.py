@@ -76,7 +76,8 @@ def letterbox(img, new_shape=(640, 640), color=(114, 114, 114), auto=True,
     return img, ratio, (dw, dh)
 
 
-def preprocess_image(img0: np.ndarray):
+def preprocess_image(img0: np.ndarray,
+                     new_shape: Tuple[int, int] = (640, 640)):
     """
     Preprocess image according to YOLOv7 input requirements.
     Takes image in np.array format, resizes it to specific size using
@@ -90,7 +91,7 @@ def preprocess_image(img0: np.ndarray):
       img0 (np.ndarray): original image
     """
     # resize
-    img = letterbox(img0, auto=False)[0]
+    img = letterbox(img0, new_shape=new_shape, auto=False)[0]
 
     # Convert
     img = img.transpose(2, 0, 1)
