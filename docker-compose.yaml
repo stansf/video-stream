@@ -39,6 +39,16 @@ services:
       KAFKA_LISTENERS: INTERNAL://:9092,EXTERNAL://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LOG_RETENTION_MS: 10000
+      KAFKA_LOG_RETENTION_BYTES: 204800
+      KAFKA_DELETE_RETENTION_MS: 10000
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '1'
+        reservations:
+          memory: 2G
 
   kafka-ui:
     image: provectuslabs/kafka-ui:v0.7.1
@@ -54,6 +64,11 @@ services:
       - KAFKA_CLUSTERS_0_READONLY=true
     depends_on:
       - kafka
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1'
 
   pyspark:
     build:
