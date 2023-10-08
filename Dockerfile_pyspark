@@ -1,0 +1,27 @@
+FROM spark:3.5.0-python3
+
+ENV DEBIAN_FRONTEND=noninteractive
+USER root
+RUN /usr/bin/ln -sf /usr/share/zoneinfo/America/Toronto /etc/localtime
+
+RUN apt update \
+    && apt -y install python3-dev python3-pip wget libturbojpeg \
+    && apt clean
+
+RUN pip install -U pip
+RUN pip --no-cache-dir install torch==1.12.1+cpu torchvision==0.13.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+
+WORKDIR /app
+COPY detection /app/detection
+RUN pip --no-cache-dir install -r /app/detection/requirements.txt
+RUN pip install -e /app/detection
+
+RUN pip --no-cache-dir install gdown
+RUN gdown --fuzzy --folder https://drive.google.com/drive/folders/1D5WFAGqnhRbc30iu6lfcmPLa6u_ntaXm --output /app/
+ENV MODEL_PATH_OV='/app/model/yolov7-tiny_int8.xml'
+
+COPY pyspark_job /app/pyspark_job
+
+
+EXPOSE 8006
+EXPOSE 4040

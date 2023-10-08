@@ -56,7 +56,9 @@ services:
       - kafka
 
   pyspark:
-    image: spark:3.5.0-python3
+    build:
+      context: .
+      dockerfile: Dockerfile_pyspark
     container_name: pyspark-service
     ports:
       - "8006:8006"
@@ -64,12 +66,15 @@ services:
     restart: always
     stdin_open: true # docker run -i
     tty: true        # docker run -t
-#    command: bash
-    user: root
+#    user: root
     entrypoint: /bin/bash
+    command: '/opt/spark/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 /app/pyspark_job/pyspark_detection_vis.py'
     expose:
       - 8006
       - 4040
-    volumes:
-      - "/home/fateev/dev/video_streaming:/video_streaming"
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4'
 
