@@ -107,3 +107,14 @@ services:
           memory: 8G
           cpus: '4'
 
+  video-stream-demo:
+    build:
+      context: .
+      dockerfile: video_stream_demo/Dockerfile
+    container_name: video-stream-demo
+    restart: always
+    command: 'uvicorn video_stream_demo.main:app --reload --host=0.0.0.0 --port=8001'
+    environment:
+      - KAFKA_SERVER=kafka:9092
+    ports:
+      - '8001:8001'
